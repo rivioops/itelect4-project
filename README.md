@@ -1,19 +1,75 @@
-# ITELECT4 Module 1 TypeScript Fundamentals
+# React + TypeScript + Vite
 
-<pre>
-          ▟██▙          ▟██▙         <span style="color: #1d4ed8">itelect4</span>@<span style="color: #1d4ed8">project</span>
-         ▓▓██████████████████▓▓        ----------------
-        ▓▓████████████████████▓▓       <span style="color: #6b21a8">Project:</span>    ITELECT4 GT1 Project
-       ▓▓██████████████████████▓▓      <span style="color: #6b21a8">Concept:</span>    TypeScript fundamentals & advanced types
-      ▐▓▓██████████████████████▓▓▌     <span style="color: #6b21a8">Features:</span>   Interfaces, type aliases, generics,
-    ─ ▐▓▓██████████████████████▓▓▌ ─               utility types, enums, unions,
-  ─── ▐▓▓██████^^██████^^██████▓▓▌ ───             intersections, type narrowing
-    ─ ▐▓▓██████████████████████▓▓▌ ─   
-       ▓▓██████████████████████▓▓      <span style="color: #6b21a8">Interfaces:</span> User, Course, Submission
-        ▀▓▓██████████████████▓▓▀       
-  ▄▀▀▄    ▀▀▓▓████████████▓▓▀▀         <span style="color: #6b21a8">Install:</span>    npm install
- ▐▌  ▐▌       ▀▀▓▓████▓▓▀▀             <span style="color: #6b21a8">Run:</span>        npx ts-node src/index.ts
-  ▀▄▄██     ▄▓▓██████████▓▓▄           <span style="color: #6b21a8">Check:</span>      npx tsc --noEmit
-    ███   ▟▓▓██████████████▓▓▙         
-      ▀██▓▓██████████████████▓▓        
-</pre>
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+
+Currently, two official plugins are available:
+
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+
+## React Compiler
+
+The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+
+## Expanding the ESLint configuration
+
+If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+
+```js
+export default defineConfig([
+  globalIgnores(['dist']),
+  {
+    files: ['**/*.{ts,tsx}'],
+    extends: [
+      // Other configs...
+
+      // Remove tseslint.configs.recommended and replace with this
+      tseslint.configs.recommendedTypeChecked,
+      // Alternatively, use this for stricter rules
+      tseslint.configs.strictTypeChecked,
+      // Optionally, add this for stylistic rules
+      tseslint.configs.stylisticTypeChecked,
+
+      // Other configs...
+    ],
+    languageOptions: {
+      parserOptions: {
+        project: ['./tsconfig.node.json', './tsconfig.app.json'],
+        tsconfigRootDir: import.meta.dirname,
+      },
+      // other options...
+    },
+  },
+])
+
+```
+
+You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+
+```js
+// eslint.config.js
+import reactX from 'eslint-plugin-react-x'
+import reactDom from 'eslint-plugin-react-dom'
+
+export default defineConfig([
+  globalIgnores(['dist']),
+  {
+    files: ['**/*.{ts,tsx}'],
+    extends: [
+      // Other configs...
+      // Enable lint rules for React
+      reactX.configs['recommended-typescript'],
+      // Enable lint rules for React DOM
+      reactDom.configs.recommended,
+    ],
+    languageOptions: {
+      parserOptions: {
+        project: ['./tsconfig.node.json', './tsconfig.app.json'],
+        tsconfigRootDir: import.meta.dirname,
+      },
+      // other options...
+    },
+  },
+])
+
+```
