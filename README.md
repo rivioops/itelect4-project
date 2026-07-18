@@ -1,19 +1,19 @@
 # ITELECT4 Module 1 TypeScript Fundamentals
 
-```yaml
-           MMM.           .MMM        itelect4@project
-           MMMMMMMMMMMMMMMMMMM        ----------------
-           MMMMMMMMMMMMMMMMMMM        Project:    ITELECT4 GT1 Project
-          MMMMMMMMMMMMMMMMMMMMM       Concept:    TypeScript fundamentals & advanced types
-         MMMMMMMMMMMMMMMMMMMMMMM      Features:   Interfaces, type aliases, generics,
-        MMMMMMMMMMMMMMMMMMMMMMMM                  utility types, enums, unions,
-        MMMM::- -:::::::- -::MMMM                 intersections, type narrowing
-         MM~:~ oo~:::::~ oo~:~MM      
-    .. MMMMM::.oo:::+:::.oo::MMMMM .. Interfaces: User, Course, Submission
-          .M::+::+++++++::+::M.       
-            M::=+:+++++:+=::M         Install:    npm install
-             MM::+++++++::MM          Run:        npx ts-node src/index.ts
-                MMM::::MMM            Check:      npx tsc --noEmit
-             MMMMMMMMMMMMMMM          
-            MMMMMMMMMMMMMMMMM         
-```
+<pre>
+          ▟██▙          ▟██▙         <span style="color: #1d4ed8">itelect4</span>@<span style="color: #1d4ed8">project</span>
+         ▓▓██████████████████▓▓        ----------------
+        ▓▓████████████████████▓▓       <span style="color: #6b21a8">Project:</span>    ITELECT4 GT1 Project
+       ▓▓██████████████████████▓▓      <span style="color: #6b21a8">Concept:</span>    TypeScript fundamentals & advanced types
+      ▐▓▓██████████████████████▓▓▌     <span style="color: #6b21a8">Features:</span>   Interfaces, type aliases, generics,
+    ─ ▐▓▓██████████████████████▓▓▌ ─               utility types, enums, unions,
+  ─── ▐▓▓██████^^██████^^██████▓▓▌ ───             intersections, type narrowing
+    ─ ▐▓▓██████████████████████▓▓▌ ─   
+       ▓▓██████████████████████▓▓      <span style="color: #6b21a8">Interfaces:</span> User, Course, Submission
+        ▀▓▓██████████████████▓▓▀       
+  ▄▀▀▄    ▀▀▓▓████████████▓▓▀▀         <span style="color: #6b21a8">Install:</span>    npm install
+ ▐▌  ▐▌       ▀▀▓▓████▓▓▀▀             <span style="color: #6b21a8">Run:</span>        npx ts-node src/index.ts
+  ▀▄▄██     ▄▓▓██████████▓▓▄           <span style="color: #6b21a8">Check:</span>      npx tsc --noEmit
+    ███   ▟▓▓██████████████▓▓▙         
+      ▀██▓▓██████████████████▓▓        
+</pre>
