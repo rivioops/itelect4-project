@@ -2,15 +2,12 @@ import { NavLink, Outlet } from "react-router";
 import useToggle from "../hooks/useToggle";
 import useAuthStore from "../store/authStore";
 function Layout() {
-  // Dark mode MOVES here, out of Session 5's App.tsx
   const [isDarkMode, toggleDarkMode] = useToggle(false);
   const userName = useAuthStore((state) => state.userName);
   const logout = useAuthStore((state) => state.logout);
-  // The classes every nav link shares, then the two variants
   const base = "rounded px-3 py-1.5 text-sm";
   const activeLink = `${base} bg-blue-600 font-semibold text-white`;
   const idleLink = `${base} text-gray-700 hover:bg-gray-200 dark:text-gray-300`;
-  // NavLink hands this function an isActive flag on every render
   const linkClass = ({ isActive }: { isActive: boolean }): string =>
     isActive ? activeLink : idleLink;
 
@@ -23,16 +20,16 @@ border-gray-200 bg-white p-4 dark:border-gray-700
 dark:bg-gray-800"
         >
           <span className="mr-4 font-bold text-gray-900 dark:text-white">
-            Submission Tracker
+            Event RSVP System
           </span>
           <NavLink to="/" end className={linkClass}>
             Dashboard
           </NavLink>
-          <NavLink to="/courses" className={linkClass}>
-            Courses
+          <NavLink to="/events" className={linkClass}>
+            Events
           </NavLink>
-          <NavLink to="/submissions" className={linkClass}>
-            Submissions
+          <NavLink to="/rsvps" className={linkClass}>
+            RSVPs
           </NavLink>
 
           {userName === null ? (
@@ -57,7 +54,7 @@ text-white dark:bg-gray-200 dark:text-gray-900"
           </button>
         </nav>
         <main className="p-6">
-          <Outlet /> {/* <-- THE HOLE */}
+          <Outlet />
         </main>
       </div>
     </div>

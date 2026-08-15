@@ -1,9 +1,9 @@
-import type { Course } from "../types/index";
-interface CourseCardProps {
-  course: Course;
+import type { Event } from "../types/index";
+interface EventCardProps {
+  event: Event;
   variant?: "default" | "compact";
 }
-function CourseCard({ course, variant = "default" }: CourseCardProps) {
+function EventCard({ event, variant = "default" }: EventCardProps) {
   const isCompact = variant === "compact";
   return (
     <div
@@ -14,15 +14,15 @@ function CourseCard({ course, variant = "default" }: CourseCardProps) {
         className={`font-bold text-gray-900 dark:text-white
             ${isCompact ? "text-sm" : "text-lg"}`}
       >
-        {course.code}
+        {event.id}
       </h3>
       {!isCompact && (
-        <p className="text-gray-600 dark:text-gray-300">{course.title}</p>
+        <p className="text-gray-600 dark:text-gray-300">{event.title}</p>
       )}
       <p className="text-sm text-gray-500 dark:text-gray-400">
-        {course.units} units -- {course.semester}
+        {event.date} -- {event.location}
       </p>
     </div>
   );
 }
-export default CourseCard;
+export default EventCard;

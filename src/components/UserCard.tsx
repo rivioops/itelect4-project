@@ -4,7 +4,7 @@ interface UserCardProps {
   onSelect: (user: User) => void;
 }
 function UserCard({ user, onSelect }: UserCardProps) {
-  const handleClick = (e: React.MouseEvent<HTMLButtonElement>): void => {
+  const handleClick = (): void => {
     onSelect(user);
   };
   // Demo only -- shows the typed onChange pattern, not wired to real state
@@ -12,7 +12,6 @@ function UserCard({ user, onSelect }: UserCardProps) {
     console.log("Note:", e.target.value);
   };
   return (
-    // <-- only this block changes
     <div
       className="rounded-lg border border-gray-200 bg-white p-5
             shadow-sm dark:bg-gray-800 dark:border-gray-700"

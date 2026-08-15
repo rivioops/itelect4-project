@@ -1,46 +1,45 @@
-import type { User, Course, Submission } from "../types/index";
-export const student: User = {
+import type { User, Event, RSVP } from "../types/index";
+export const attendee: User = {
   id: 1,
   name: "Regina Angeli Cadeliña",
   email: "regina@example.com",
-  role: "student",
+  role: "attendee",
   isActive: true,
 };
-export const allCourses: Course[] = [
+export const allEvents: Event[] = [
   {
-    code: "ITELECT4",
-    title: "IT Elective 4",
-    units: 3,
-    semester: "1st Semester 2026-2027",
+    id: "EVT-001",
+    title: "Tech Conference 2026",
+    date: "2026-10-15",
+    location: "Main Hall",
   },
   {
-    code: "ITELECT3",
-    title: "IT Elective 3",
-    units: 3,
-    semester: "2nd Semester 2025-2026",
+    id: "EVT-002",
+    title: "React Developer Meetup",
+    date: "2026-11-02",
+    location: "Room 404",
   },
   {
-    code: "CSSWENG",
-    title: "Software Engineering",
-    units: 3,
-    semester: "1st Semester 2026-2027",
+    id: "EVT-003",
+    title: "Startup Pitch Night",
+    date: "2026-12-10",
+    location: "Auditorium A",
   },
 ];
 
-export const allSubmissions: Submission[] = [
+export const allRSVPs: RSVP[] = [
   {
     id: 1,
-    studentId: 1,
-    courseCode: "ITELECT4",
-    repoUrl: "github.com/rivioops/itelect4-project",
-    submittedAt: new Date(),
-    score: 95,
+    userId: 1,
+    eventId: "EVT-001",
+    status: "confirmed",
+    timestamp: new Date(),
   },
   {
     id: 2,
-    studentId: 1,
-    courseCode: "ITELECT3",
-    repoUrl: "github.com/rivioops/itelect3-final",
-    submittedAt: new Date(),
+    userId: 1,
+    eventId: "EVT-002",
+    status: "waitlisted",
+    timestamp: new Date(),
   },
 ];
