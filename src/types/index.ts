@@ -1,25 +1,24 @@
 // ===== INTERFACES =====
 // An interface defines the SHAPE of an object -- what fields it must have.
 export interface User {
-    id: number | string;
-    name: string;
-    email: string;
-    role: "student" | "admin" | "instructor"; // only these values
-    isActive: boolean;
+  id: number | string;
+  name: string;
+  email: string;
+  role: "attendee" | "organizer";
+  isActive: boolean;
 }
-export interface Course {
-    code: string;
-    title: string;
-    units: number;
-    semester: string;
+export interface Event {
+  id: string;
+  title: string;
+  date: string;
+  location: string;
 }
-export interface Submission {
-    id: number;
-    studentId: number;
-    courseCode: string;
-    repoUrl: string;
-    submittedAt: Date;
-    score?: number; // ? means this field is optional
+export interface RSVP {
+  id: number;
+  userId: number;
+  eventId: string;
+  status: "pending" | "confirmed" | "waitlisted";
+  timestamp: Date;
 }
 
 // ===== TYPE ALIASES =====
@@ -28,8 +27,8 @@ export interface Submission {
 export type ID = number | string;
 // Alias for an object shape
 export type Coordinate = {
-    x: number;
-    y: number;
+  x: number;
+  y: number;
 };
 // Alias for a function signature
 export type Formatter = (value: number) => string;
@@ -39,38 +38,48 @@ const position: Coordinate = { x: 10, y: 20 };
 const formatScore: Formatter = (value) => `${value}%`;
 console.log(studentId); // S2026-001
 console.log(formatScore(95.5)); // 95.5%
+console.log(position);
 
 // ===== UNION TYPES -- One OR the other =====
 export type StringOrNumber = string | number;
 export type Status = "pending" | "active" | "inactive"; // literal union
 // Function that accepts a union type
 export function printId(id: StringOrNumber): void {
-    console.log(`ID: ${id}`);
+  console.log(`ID: ${id}`);
 }
 printId(101);
 printId("S2026-001");
 
 // ===== INTERSECTION TYPES -- combines ALL properties =====
-// StudentWithCourse must have all User fields AND enrolledCourse AND gpa
-export type StudentWithCourse = User & {
-    enrolledCourse: Course;
-    gpa: number;
+// AttendeeWithEvent must have all User fields AND registeredEvent AND ticketType
+export type AttendeeWithEvent = User & {
+  registeredEvent: Event;
+  ticketType: string;
 };
-const topStudent: StudentWithCourse = {
-    id: 1, name: "Maria Santos", email: "m@example.com",
-    role: "student", isActive: true,
-    enrolledCourse: { code: "ITELECT4", title: "IT Elective 4", units: 3, semester: "1st" },
-    gpa: 1.25,
+const topAttendee: AttendeeWithEvent = {
+  id: 1,
+  name: "Maria Santos",
+  email: "m@example.com",
+  role: "attendee",
+  isActive: true,
+  registeredEvent: {
+    id: "EVT-2026",
+    title: "Tech Conference 2026",
+    date: "2026-10-15",
+    location: "Main Hall",
+  },
+  ticketType: "VIP",
 };
+console.log(topAttendee);
 
 // ----- types/index.ts -----
 // ===== GENERIC INTERFACE =====
 // ApiResponse<T> can wrap ANY data type -- every future GT reuses this
 export interface ApiResponse<T> {
-    success: boolean;
-    data: T;
-    message?: string;
-};
+  success: boolean;
+  data: T;
+  message?: string;
+}
 
 // ===== UTILITY TYPES =====
 // Partial<T> -- every field becomes optional
@@ -80,18 +89,17 @@ export type UserPreview = Pick<User, "id" | "name" | "role">;
 // Omit<T, K> -- keep every field EXCEPT the listed ones
 export type PublicUser = Omit<User, "email" | "isActive">;
 // Record<K, T> -- a fixed set of keys, each mapped to the same value type
-export type RoleCount = Record<"student" | "admin" | "instructor", number>;
+export type RoleCount = Record<"attendee" | "organizer", number>;
 
 // ===== ENUMS =====
 // Regular enum -- exists at runtime; can be looped over or reverse-mapped
-export enum SubmissionStatus {
-    Pending,
-    Graded,
-    Late,
-};
+export enum RSVPStatus {
+  Pending,
+  Confirmed,
+  Waitlisted,
+}
 // const enum -- inlined at compile time, zero runtime overhead
 export const enum Role {
-    Student = "student",
-    Admin = "admin",
-    Instructor = "instructor",
+  Attendee = "attendee",
+  Organizer = "organizer",
 }
