@@ -1,6 +1,6 @@
-import type { RSVP } from "../types/index";
+import type { ApiRSVP } from "../types/index";
 interface RSVPBadgeProps {
-  rsvp: RSVP;
+  rsvp: ApiRSVP;
   children?: React.ReactNode;
 }
 const RSVPBadge: React.FC<RSVPBadgeProps> = ({ rsvp, children }) => {

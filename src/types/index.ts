@@ -103,3 +103,10 @@ export const enum Role {
   Attendee = "attendee",
   Organizer = "organizer",
 }
+
+export type ApiRSVP = Omit<RSVP, "id" | "timestamp"> & {
+  id: string;
+  timestamp: string;
+};
+
+export type NewRSVP = Omit<ApiRSVP, "id">;
