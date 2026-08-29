@@ -1,26 +1,18 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 import EventCard from "../components/EventCard";
 import UserCard from "../components/UserCard";
-import type { User } from "../types/index";
-import { attendee, allEvents } from "../data/mockData";
+import type { User, Event } from "../types/index";
+import { attendee } from "../data/mockData";
+import { fetchEvents } from "../api/client";
 
 function DashboardPage() {
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [isError, setIsError] = useState(false);
 
-  useEffect(() => {
-    const timer = setTimeout(() => setIsLoading(false), 500);
-    return () => clearTimeout(timer);
-  }, []);
-
-  if (isError) {
-    return (
-      <div className="m-6 rounded-lg bg-red-50 p-4 text-red-700">
-        Could not load events.
-      </div>
-    );
-  }
+  const { data: events, isPending, isError } = useQuery<Event[]>({
+    queryKey: ["events"],
+    queryFn: fetchEvents,
+  });
 
   return (
     <div className="p-6">
@@ -28,14 +20,6 @@ function DashboardPage() {
         <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
           Dashboard
         </h2>
-        <div className="flex gap-2">
-          <button
-            onClick={() => setIsError(true)}
-            className="rounded bg-red-100 px-3 py-1.5 text-sm font-semibold text-red-700 hover:bg-red-200"
-          >
-            Simulate Error
-          </button>
-        </div>
       </div>
       <div className="mt-4 flex items-center gap-4">
         {selectedUser && (
@@ -53,10 +37,12 @@ function DashboardPage() {
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 mt-4">
         <UserCard user={attendee} onSelect={setSelectedUser} />
-        {isLoading ? (
+        {isPending ? (
           <div className="animate-pulse rounded-lg bg-gray-200 p-5 dark:bg-gray-700" />
+        ) : isError ? (
+          <div className="rounded-lg bg-red-50 p-4 text-red-700">Error loading events</div>
         ) : (
-          allEvents.map((event) => (
+          events?.map((event) => (
             <EventCard key={event.id} event={event} variant="compact" />
           ))
         )}

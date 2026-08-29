@@ -1,0 +1,38 @@
+{
+  "events": [
+    {
+      "id": "EVT-001",
+      "title": "Tech Conference 2026",
+      "date": "2026-10-15",
+      "location": "Main Hall"
+    },
+    {
+      "id": "EVT-002",
+      "title": "React Developer Meetup",
+      "date": "2026-11-02",
+      "location": "Room 404"
+    },
+    {
+      "id": "EVT-003",
+      "title": "Startup Pitch Night",
+      "date": "2026-12-10",
+      "location": "Auditorium A"
+    }
+  ],
+  "rsvps": [
+    {
+      "id": "1",
+      "userId": 1,
+      "eventId": "EVT-001",
+      "status": "confirmed",
+      "timestamp": "2026-08-01T09:00:00.000Z"
+    },
+    {
+      "id": "2",
+      "userId": 1,
+      "eventId": "EVT-002",
+      "status": "waitlisted",
+      "timestamp": "2026-07-18T09:00:00.000Z"
+    }
+  ]
+}

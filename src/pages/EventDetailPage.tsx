@@ -1,15 +1,27 @@
 import { useParams, useNavigate } from "react-router";
+import { useQuery } from "@tanstack/react-query";
 import EventCard from "../components/EventCard";
-import { allEvents } from "../data/mockData";
+import { fetchEventById } from "../api/client";
+import type { Event } from "../types/index";
+
 function EventDetailPage() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const event = allEvents.find((e) => e.id === id);
   
-  if (event === undefined) {
+  const { data, isPending, isError, error } = useQuery<Event>({
+    queryKey: ["events", id],
+    queryFn: () => fetchEventById(id!),
+    enabled: id !== undefined,
+  });
+
+  if (isPending) {
+    return <div className="animate-pulse p-6">Loading event...</div>;
+  }
+
+  if (isError) {
     return (
       <div className="rounded-lg bg-red-50 p-4 text-red-700">
-        No event found with ID "{id}".
+        {error.message}
       </div>
     );
   }
@@ -20,10 +32,10 @@ function EventDetailPage() {
         className="mb-4 text-2xl font-bold text-gray-900
 dark:text-white"
       >
-        {event.title}
+        {data.title}
       </h2>
       <div className="max-w-sm">
-        <EventCard event={event} />
+        <EventCard event={data} />
       </div>
       <button
         onClick={() => navigate("/events")}
