@@ -17,6 +17,8 @@ export interface RSVP {
   id: number;
   userId: number;
   eventId: string;
+  guestName: string;
+  guestCount: number;
   status: "pending" | "confirmed" | "waitlisted";
   timestamp: Date;
 }
