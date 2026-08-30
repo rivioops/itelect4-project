@@ -1,15 +1,18 @@
-// src/pages/LoginPage.tsx -- NEW FILE
 import { useState } from "react";
 import { useNavigate } from "react-router";
 import useAuthStore from "../store/authStore";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+
 function LoginPage() {
   const [name, setName] = useState<string>("");
-  // Pull just the login action out of the store
   const login = useAuthStore((state) => state.login);
   const navigate = useNavigate();
+  
   const handleLogin = (): void => {
-    login(name); // 1. put the token in the store
-    navigate("/submissions"); // 2. then send them where they were going
+    login(name);
+    navigate("/rsvps"); // Send them to RSVPs since submissions no longer exist
   };
 
   return (
@@ -20,21 +23,22 @@ dark:text-white"
       >
         Login
       </h2>
-      <input
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-        placeholder="Your name"
-        className="w-full rounded border border-gray-300 p-2"
-      />
-      <button
+      <div className="grid gap-1.5">
+        <Label htmlFor="name" className="text-foreground">Your name</Label>
+        <Input
+          id="name"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          placeholder="Juan dela Cruz"
+        />
+      </div>
+      <Button
         onClick={handleLogin}
         disabled={name === ""}
-        className="mt-3 rounded bg-blue-600 px-3 py-1.5 text-sm
-font-semibold text-white transition hover:bg-blue-700
-disabled:bg-gray-400"
+        className="mt-3"
       >
         Log In
-      </button>
+      </Button>
     </div>
   );
 }

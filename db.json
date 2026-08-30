@@ -24,6 +24,8 @@
       "id": "1",
       "userId": 1,
       "eventId": "EVT-001",
+      "guestName": "Juan dela Cruz",
+      "guestCount": 2,
       "status": "confirmed",
       "timestamp": "2026-08-01T09:00:00.000Z"
     },
@@ -31,8 +33,41 @@
       "id": "2",
       "userId": 1,
       "eventId": "EVT-002",
+      "guestName": "Regina Cadeliña",
+      "guestCount": 1,
       "status": "waitlisted",
       "timestamp": "2026-07-18T09:00:00.000Z"
+    },
+    {
+      "userId": 1,
+      "eventId": "dfs",
+      "status": "pending",
+      "timestamp": "2026-08-29T16:59:56.272Z",
+      "id": "75avKBDvMfs"
+    },
+    {
+      "userId": 1,
+      "eventId": "cxcxc",
+      "status": "pending",
+      "timestamp": "2026-08-29T17:00:35.712Z",
+      "id": "GGBvUGumrFE"
+    },
+    {
+      "userId": 1,
+      "eventId": "dfs",
+      "status": "pending",
+      "timestamp": "2026-08-29T17:01:03.320Z",
+      "id": "a8tNd5xJGCU"
+    },
+    {
+      "userId": 1,
+      "eventId": "EVT-001",
+      "guestName": "Regina",
+      "guestCount": 1,
+      "status": "pending",
+      "timestamp": "2026-08-29T17:07:30.984Z",
+      "id": "q_-Wec3nFP8"
     }
-  ]
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
 }
