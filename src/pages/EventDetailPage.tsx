@@ -7,7 +7,7 @@ import type { Event } from "../types/index";
 function EventDetailPage() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  
+
   const { data, isPending, isError, error } = useQuery<Event>({
     queryKey: ["events", id],
     queryFn: () => fetchEventById(id!),
@@ -15,34 +15,31 @@ function EventDetailPage() {
   });
 
   if (isPending) {
-    return <div className="animate-pulse p-6">Loading event...</div>;
+    return (
+      <div className="animate-pulse rounded-xl border border-border bg-muted h-40 max-w-sm" />
+    );
   }
 
   if (isError) {
     return (
-      <div className="rounded-lg bg-red-50 p-4 text-red-700">
+      <div className="rounded-xl border border-destructive/20 bg-destructive/5 p-4 text-sm text-destructive">
         {error.message}
       </div>
     );
   }
 
   return (
-    <div>
-      <h2
-        className="mb-4 text-2xl font-bold text-gray-900
-dark:text-white"
-      >
-        {data.title}
-      </h2>
-      <div className="max-w-sm">
-        <EventCard event={data} />
-      </div>
+    <div className="max-w-lg">
+      <p className="text-xs uppercase tracking-widest text-muted-foreground mb-1">
+        Event Detail
+      </p>
+      <h2 className="mb-6 text-2xl font-bold text-foreground">{data.title}</h2>
+      <EventCard event={data} />
       <button
         onClick={() => navigate("/events")}
-        className="mt-4 rounded bg-blue-600 px-3 py-1.5 text-sm
-font-semibold text-white transition hover:bg-blue-700"
+        className="mt-6 rounded-lg border border-border px-5 py-2 text-sm font-medium text-foreground hover:bg-muted transition-colors"
       >
-        Back to Events
+        ← Back to Events
       </button>
     </div>
   );

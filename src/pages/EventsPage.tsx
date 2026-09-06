@@ -15,13 +15,19 @@ function EventsPage() {
   const setSearchTerm = useUiStore((state) => state.setSearchTerm);
 
   if (isPending) {
-    return <div className="animate-pulse p-6">Loading events...</div>;
+    return (
+      <div className="space-y-4">
+        {[1, 2, 3].map((i) => (
+          <div key={i} className="animate-pulse rounded-xl border border-border bg-muted h-24" />
+        ))}
+      </div>
+    );
   }
 
   if (isError) {
     return (
-      <div className="rounded-lg bg-red-50 p-4 text-red-700">
-        {error.message} -- is json-server running on port 3001?
+      <div className="rounded-xl border border-destructive/20 bg-destructive/5 p-4 text-sm text-destructive">
+        {error.message} &mdash; is json-server running on port 3001?
       </div>
     );
   }
@@ -34,31 +40,33 @@ function EventsPage() {
 
   return (
     <div>
-      <div className="mb-6 flex items-center justify-between">
-        <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
-          Events
-        </h2>
+      {/* Page header */}
+      <div className="mb-8 flex items-center justify-between">
+        <div>
+          <p className="text-xs uppercase tracking-widest text-muted-foreground">Browse</p>
+          <h2 className="text-2xl font-bold text-foreground">Events</h2>
+        </div>
         <input
           type="text"
           value={searchTerm}
           placeholder="Search events..."
           onChange={(e) => setSearchTerm(e.target.value)}
-          className="rounded border border-gray-300 px-3 py-1.5
-            text-sm dark:border-gray-600 dark:bg-gray-700 dark:text-white"
+          className="rounded-lg border border-border bg-background px-4 py-2 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
         />
       </div>
+
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {filteredEvents.map((event) => (
           <Link
             key={event.id}
             to={`/events/${event.id}`}
-            className="block transition-transform hover:-translate-y-1"
+            className="block transition-transform hover:-translate-y-0.5"
           >
             <EventCard event={event} />
           </Link>
         ))}
         {filteredEvents.length === 0 && (
-          <p className="col-span-full text-gray-500 dark:text-gray-400">
+          <p className="col-span-full text-sm text-muted-foreground">
             No events found matching your search.
           </p>
         )}

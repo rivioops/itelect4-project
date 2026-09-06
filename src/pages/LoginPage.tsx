@@ -9,36 +9,41 @@ function LoginPage() {
   const [name, setName] = useState<string>("");
   const login = useAuthStore((state) => state.login);
   const navigate = useNavigate();
-  
+
   const handleLogin = (): void => {
     login(name);
-    navigate("/rsvps"); // Send them to RSVPs since submissions no longer exist
+    navigate("/rsvps");
   };
 
   return (
-    <div className="max-w-sm">
-      <h2
-        className="mb-4 text-2xl font-bold text-gray-900
-dark:text-white"
-      >
-        Login
-      </h2>
-      <div className="grid gap-1.5">
-        <Label htmlFor="name" className="text-foreground">Your name</Label>
-        <Input
-          id="name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          placeholder="Juan dela Cruz"
-        />
+    <div className="flex items-start justify-center pt-12">
+      <div className="w-full max-w-sm rounded-2xl border border-border bg-card p-8 shadow-sm">
+        <p className="text-xs uppercase tracking-widest text-muted-foreground mb-1">
+          Welcome back
+        </p>
+        <h2 className="mb-6 text-2xl font-bold text-foreground">Log In</h2>
+        <div className="grid gap-2">
+          <Label htmlFor="name" className="text-foreground">
+            Your name
+          </Label>
+          <Input
+            id="name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            placeholder="Regina Cadeliña"
+            onKeyDown={(e) => {
+              if (e.key === "Enter" && name !== "") handleLogin();
+            }}
+          />
+        </div>
+        <Button
+          onClick={handleLogin}
+          disabled={name === ""}
+          className="mt-4 w-full"
+        >
+          Log In
+        </Button>
       </div>
-      <Button
-        onClick={handleLogin}
-        disabled={name === ""}
-        className="mt-3"
-      >
-        Log In
-      </Button>
     </div>
   );
 }

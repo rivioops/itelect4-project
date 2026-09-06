@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
+import { Link } from "react-router";
 import EventCard from "../components/EventCard";
 import UserCard from "../components/UserCard";
 import type { User, Event } from "../types/index";
@@ -15,35 +16,49 @@ function DashboardPage() {
   });
 
   return (
-    <div className="p-6">
-      <div className="mb-6 flex items-center justify-between">
-        <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
-          Dashboard
-        </h2>
-      </div>
-      <div className="mt-4 flex items-center gap-4">
-        {selectedUser && (
-          <p className="font-semibold text-blue-600 dark:text-blue-400">
-            Selected: {selectedUser.name}
+    <div>
+      {/* Hero banner */}
+      <div className="relative mb-10 overflow-hidden rounded-2xl border border-border bg-muted">
+        <div className="px-10 py-16 text-center">
+          <p className="text-xs uppercase tracking-widest text-muted-foreground mb-2">
+            Welcome to
           </p>
-        )}
-        <button
-          onClick={() => console.log("Show details")}
-          className="rounded border border-gray-300 px-3 py-1.5 text-sm hover:bg-gray-50 dark:border-gray-600 dark:text-white dark:hover:bg-gray-800"
-        >
-          Show Details
-        </button>
+          <h1 className="text-4xl font-bold tracking-tight text-foreground">
+            Event RSVP System
+          </h1>
+          <p className="mt-3 text-muted-foreground max-w-sm mx-auto text-sm">
+            Browse upcoming events, manage your RSVPs, and check your guest details all in one place.
+          </p>
+          <Link
+            to="/events"
+            className="mt-6 inline-block rounded-lg border border-foreground bg-foreground px-6 py-2 text-sm font-semibold text-background transition hover:opacity-80"
+          >
+            Browse Events
+          </Link>
+        </div>
       </div>
 
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 mt-4">
+      {/* Selected user indicator */}
+      {selectedUser && (
+        <p className="mb-4 text-sm font-medium text-foreground">
+          Selected: <span className="text-muted-foreground">{selectedUser.name}</span>
+        </p>
+      )}
+
+      {/* Cards grid */}
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
         <UserCard user={attendee} onSelect={setSelectedUser} />
         {isPending ? (
-          <div className="animate-pulse rounded-lg bg-gray-200 p-5 dark:bg-gray-700" />
+          <div className="animate-pulse rounded-xl border border-border bg-muted p-6 h-28" />
         ) : isError ? (
-          <div className="rounded-lg bg-red-50 p-4 text-red-700">Error loading events</div>
+          <div className="rounded-xl border border-destructive/20 bg-destructive/5 p-4 text-sm text-destructive">
+            Error loading events — is json-server running?
+          </div>
         ) : (
           events?.map((event) => (
-            <EventCard key={event.id} event={event} variant="compact" />
+            <Link key={event.id} to={`/events/${event.id}`} className="block transition-transform hover:-translate-y-0.5">
+              <EventCard event={event} variant="compact" />
+            </Link>
           ))
         )}
       </div>

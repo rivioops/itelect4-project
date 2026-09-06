@@ -1,8 +1,10 @@
 import type { User } from "../types/index";
+
 interface UserCardProps {
   user: User;
   onSelect: (user: User) => void;
 }
+
 function UserCard({ user, onSelect }: UserCardProps) {
   const handleClick = (): void => {
     onSelect(user);
@@ -12,29 +14,22 @@ function UserCard({ user, onSelect }: UserCardProps) {
     console.log("Note:", e.target.value);
   };
   return (
-    <div
-      className="rounded-lg border border-gray-200 bg-white p-5
-            shadow-sm dark:bg-gray-800 dark:border-gray-700"
-    >
-      <h3 className="text-lg font-bold text-gray-900 dark:text-white">
-        {user.name}
-      </h3>
-      <p className="text-gray-600 dark:text-gray-300">{user.email}</p>
-      <p className="text-sm text-gray-500 dark:text-gray-400">
-        Role: {user.role}
+    <div className="rounded-xl border border-border bg-card p-6 shadow-sm">
+      <h3 className="text-base font-semibold text-foreground">{user.name}</h3>
+      <p className="mt-0.5 text-sm text-muted-foreground">{user.email}</p>
+      <p className="mt-0.5 text-xs uppercase tracking-wider text-muted-foreground">
+        {user.role}
       </p>
       <button
         onClick={handleClick}
-        className="mt-3 rounded bg-blue-600 px-3 py-1.5 text-sm
-            font-semibold text-white transition hover:bg-blue-700"
+        className="mt-4 rounded-lg border border-border px-4 py-1.5 text-sm font-medium text-foreground hover:bg-muted transition-colors"
       >
         Select
       </button>
       <input
         onChange={handleNoteChange}
         placeholder="Quick note (demo only)"
-        className="mt-2 w-full rounded border border-gray-300 px-2 py-1
-            text-sm dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+        className="mt-3 w-full rounded-lg border border-border bg-background px-3 py-1.5 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
       />
     </div>
   );
