@@ -1,26 +1,24 @@
 import type { Event } from "../types/index";
+
 interface EventCardProps {
   event: Event;
   variant?: "default" | "compact";
 }
+
 function EventCard({ event, variant = "default" }: EventCardProps) {
   const isCompact = variant === "compact";
   return (
     <div
-      className={`rounded-lg border border-gray-200 bg-white shadow-sm
-            dark:bg-gray-800 dark:border-gray-700 ${isCompact ? "p-3" : "p-5"}`}
+      className={`rounded-xl border border-border bg-card text-card-foreground shadow-sm transition-shadow hover:shadow-md ${isCompact ? "p-4" : "p-6"}`}
     >
-      <h3
-        className={`font-bold text-gray-900 dark:text-white
-            ${isCompact ? "text-sm" : "text-lg"}`}
-      >
+      <p className="text-xs uppercase tracking-widest text-muted-foreground mb-1">
         {event.id}
-      </h3>
+      </p>
       {!isCompact && (
-        <p className="text-gray-600 dark:text-gray-300">{event.title}</p>
+        <h3 className="text-lg font-semibold text-foreground">{event.title}</h3>
       )}
-      <p className="text-sm text-gray-500 dark:text-gray-400">
-        {event.date} -- {event.location}
+      <p className="mt-1 text-sm text-muted-foreground">
+        {event.date} &mdash; {event.location}
       </p>
     </div>
   );
