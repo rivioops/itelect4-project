@@ -106,3 +106,11 @@ Author:     Regina Angeli Cadeliña
 
   Git tags:   gt3   (end of Module 3 — do NOT delete)
 ```
+
+## GT4 Part 2: Live Deployment
+
+- **Frontend:** [itelect4-project-ten.vercel.app](https://itelect4-project-ten.vercel.app/)
+- **Backend:** [itelect4-backend-seven.vercel.app](https://itelect4-backend-seven.vercel.app/)
+- **Backend health check:** [GET /api/health](https://itelect4-backend-seven.vercel.app/api/health)
+- **Frontend repository:** [rivioops/itelect4-project](https://github.com/rivioops/itelect4-project)
+- **Backend repository:** [rivioops/itelect4-backend](https://github.com/rivioops/itelect4-backend)
