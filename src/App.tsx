@@ -5,8 +5,10 @@ import DashboardPage from "./pages/DashboardPage";
 import EventsPage from "./pages/EventsPage";
 import EventDetailPage from "./pages/EventDetailPage";
 import LoginPage from "./pages/LoginPage";
+import RegisterPage from "./pages/RegisterPage";
 import RSVPsPage from "./pages/RSVPsPage";
 import NotFoundPage from "./pages/NotFoundPage";
+
 function App() {
   return (
     <Routes>
@@ -15,6 +17,7 @@ function App() {
         <Route path="events" element={<EventsPage />} />
         <Route path="events/:id" element={<EventDetailPage />} />
         <Route path="login" element={<LoginPage />} />
+        <Route path="register" element={<RegisterPage />} />
         <Route element={<ProtectedRoute />}>
           <Route path="rsvps" element={<RSVPsPage />} />
         </Route>
@@ -23,4 +26,5 @@ function App() {
     </Routes>
   );
 }
+
 export default App;

@@ -106,9 +106,35 @@ export const enum Role {
   Organizer = "organizer",
 }
 
-export type ApiRSVP = Omit<RSVP, "id" | "timestamp"> & {
+export type ApiRSVP = Omit<RSVP, "id" | "userId" | "timestamp"> & {
   id: string;
+  userId?: string;
   timestamp: string;
 };
 
-export type NewRSVP = Omit<ApiRSVP, "id">;
+// Derived type for creating an RSVP: client omits id, userId, and timestamp;
+// status is optional (defaults to "pending" on backend);
+// MongoDB assigns _id and timestamp, while the server associates userId from JWT
+export type NewRSVP = Omit<
+  ApiRSVP,
+  "id" | "userId" | "timestamp" | "status"
+> & {
+  status?: ApiRSVP["status"];
+};
+
+export interface AuthResponse {
+  token: string;
+  user: User;
+}
+
+export interface LoginCredentials {
+  email: string;
+  password: string;
+}
+
+export interface RegisterData {
+  name: string;
+  email: string;
+  password: string;
+}
+
