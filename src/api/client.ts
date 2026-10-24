@@ -7,6 +7,7 @@ import type {
   AuthResponse,
   LoginCredentials,
   RegisterData,
+  AiReview,
 } from "../types/index";
 
 export const API_URL = (
@@ -98,5 +99,14 @@ export async function registerUser(data: RegisterData): Promise<User> {
   return request<User>("/api/auth/register", {
     method: "POST",
     body: JSON.stringify(data),
+  });
+}
+
+// ===== SESSION 11: one more private call =====
+// ---- ai: private, like RSVPs. The token goes on automatically.
+export function askAi(prompt: string): Promise<AiReview> {
+  return request<AiReview>("/api/ai", {
+    method: "POST",
+    body: JSON.stringify({ prompt }),
   });
 }

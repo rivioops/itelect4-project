@@ -7,6 +7,7 @@ import EventDetailPage from "./pages/EventDetailPage";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import RSVPsPage from "./pages/RSVPsPage";
+import AiReview from "./pages/AiReview";
 import NotFoundPage from "./pages/NotFoundPage";
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
         <Route path="register" element={<RegisterPage />} />
         <Route element={<ProtectedRoute />}>
           <Route path="rsvps" element={<RSVPsPage />} />
+          <Route path="review" element={<AiReview />} />
         </Route>
         <Route path="*" element={<NotFoundPage />} />
       </Route>

@@ -114,3 +114,27 @@ Author:     Regina Angeli Cadeliña
 - **Backend health check:** [GET /api/health](https://itelect4-backend-seven.vercel.app/api/health)
 - **Frontend repository:** [rivioops/itelect4-project](https://github.com/rivioops/itelect4-project)
 - **Backend repository:** [rivioops/itelect4-backend](https://github.com/rivioops/itelect4-backend)
+
+## GT5: AI Review (Gemini via the backend)
+
+```text
+Module:     Module 5 - Guided Task 5 (frontend half)
+Route:      /review  (inside <ProtectedRoute />; logged-out users go to /login)
+Nav:        "AI Review" link in src/components/Layout.tsx
+Page:       src/pages/AiReview.tsx - validated form, useMutation, shows every
+            field of the reply as plain text (never dangerouslySetInnerHTML)
+Form:       src/schemas/reviewSchema.ts - reviewFormSchema, same limits and
+            messages as aiRequestSchema in itelect4-backend
+            (prompt: trim, min 20, max 2000 characters)
+Type:       AiReview in src/types/index.ts
+            { summary, highlights[], suggestions[], readiness }
+            readiness: "ready" | "almost" | "not-yet"
+API call:   askAi(prompt) in src/api/client.ts -> POST /api/ai through
+            request<T>(); the Bearer token is attached automatically
+Errors:     the API's own message is shown (400 validation, 429 rate limit or
+            quota, 502 bad AI reply)
+Security:   the browser never calls Gemini and holds no API key; only the
+            backend has GEMINI_API_KEY
+
+Branch:     gt5-ai   |   Tag after merge: gt5
+```

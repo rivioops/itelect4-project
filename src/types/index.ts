@@ -138,3 +138,12 @@ export interface RegisterData {
   password: string;
 }
 
+// ===== SESSION 11: what POST /api/ai sends back =====
+// Must match the backend's Review type (src/schemas/review.ts).
+export interface AiReview {
+  summary: string;
+  highlights: string[];
+  suggestions: string[];
+  readiness: "ready" | "almost" | "not-yet";
+}
+
