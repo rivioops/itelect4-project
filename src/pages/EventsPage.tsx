@@ -27,7 +27,7 @@ function EventsPage() {
   if (isError) {
     return (
       <div className="rounded-xl border border-destructive/20 bg-destructive/5 p-4 text-sm text-destructive">
-        {error.message} &mdash; is json-server running on port 3001?
+        {error.message} &mdash; could not connect to API server.
       </div>
     );
   }

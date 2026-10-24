@@ -39,12 +39,9 @@ function RSVPsPage() {
 
   const onSubmit = (values: RsvpFormValues): void => {
     addRSVP.mutate({
-      userId: 1,
       eventId: values.eventId,
       guestName: values.guestName,
       guestCount: values.guestCount,
-      status: "pending",
-      timestamp: new Date().toISOString(),
     });
   };
 
@@ -61,7 +58,7 @@ function RSVPsPage() {
   if (isError) {
     return (
       <div className="rounded-xl border border-destructive/20 bg-destructive/5 p-4 text-sm text-destructive">
-        Could not load RSVPs — is json-server running?
+        Could not load RSVPs — please verify your connection and that you are logged in.
       </div>
     );
   }

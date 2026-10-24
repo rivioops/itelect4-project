@@ -1,43 +1,112 @@
-import type { Event, ApiRSVP, NewRSVP } from "../types/index";
+import useAuthStore from "../store/authStore";
+import type {
+  Event,
+  ApiRSVP,
+  NewRSVP,
+  User,
+  AuthResponse,
+  LoginCredentials,
+  RegisterData,
+  AiReview,
+} from "../types/index";
 
-export const API_URL = "http://localhost:3001";
+export const API_URL = (
+  import.meta.env.VITE_API_URL || "http://localhost:4000"
+).replace(/\/+$/, "");
+
+/**
+ * Consolidated generic API client request function.
+ * Automatically resolves endpoint against import.meta.env.VITE_API_URL
+ * and attaches Authorization: Bearer <token> when logged in.
+ */
+export async function request<T>(
+  endpoint: string,
+  options: RequestInit = {}
+): Promise<T> {
+  const normalizedEndpoint = endpoint.startsWith("/") ? endpoint : `/${endpoint}`;
+  const cleanEndpoint =
+    API_URL.endsWith("/api") && normalizedEndpoint.startsWith("/api/")
+      ? normalizedEndpoint.slice(4)
+      : normalizedEndpoint;
+
+  const url = `${API_URL}${cleanEndpoint}`;
+  const token = useAuthStore.getState().token;
+
+  const headers: Record<string, string> = {
+    "Content-Type": "application/json",
+    ...(token ? { Authorization: `Bearer ${token}` } : {}),
+    ...(options.headers as Record<string, string> | undefined),
+  };
+
+  const res = await fetch(url, {
+    ...options,
+    headers,
+  });
+
+  if (!res.ok) {
+    let errorMessage = `Request failed with status ${res.status}`;
+    try {
+      const data = await res.json();
+      if (data?.message) {
+        errorMessage = data.message;
+      } else if (Array.isArray(data?.errors) && data.errors.length > 0) {
+        errorMessage = data.errors.join(", ");
+      }
+    } catch {
+      // Fallback to generic message
+    }
+    throw new Error(errorMessage);
+  }
+
+  if (res.status === 204) {
+    return {} as T;
+  }
+
+  return (await res.json()) as T;
+}
+
+// ===== API HELPERS =====
 
 export async function fetchEvents(): Promise<Event[]> {
-  const res = await fetch(`${API_URL}/events`);
-  if (!res.ok) {
-    throw new Error("Could not load events");
-  }
-  return res.json();
+  return request<Event[]>("/api/events");
 }
 
 export async function fetchEventById(id: string): Promise<Event> {
-  const res = await fetch(`${API_URL}/events?id=${id}`);
-  if (!res.ok) {
-    throw new Error("Could not load that event");
-  }
-  const matches: Event[] = await res.json();
-  if (matches.length === 0) {
-    throw new Error(`No event found with id "${id}".`);
-  }
-  return matches[0];
+  return request<Event>(`/api/events/${id}`);
 }
 
 export async function fetchRSVPs(): Promise<ApiRSVP[]> {
-  const res = await fetch(`${API_URL}/rsvps`);
-  if (!res.ok) {
-    throw new Error("Could not load rsvps");
-  }
-  return res.json();
+  return request<ApiRSVP[]>("/api/rsvps");
 }
 
 export async function createRSVP(newRSVP: NewRSVP): Promise<ApiRSVP> {
-  const res = await fetch(`${API_URL}/rsvps`, {
+  return request<ApiRSVP>("/api/rsvps", {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
     body: JSON.stringify(newRSVP),
   });
-  if (!res.ok) {
-    throw new Error("Could not save the rsvp");
-  }
-  return res.json();
+}
+
+export async function loginUser(
+  credentials: LoginCredentials
+): Promise<AuthResponse> {
+  return request<AuthResponse>("/api/auth/login", {
+    method: "POST",
+    body: JSON.stringify(credentials),
+  });
+}
+
+export async function registerUser(data: RegisterData): Promise<User> {
+  return request<User>("/api/auth/register", {
+    method: "POST",
+    body: JSON.stringify(data),
+  });
+}
+
+// ===== SESSION 11: one more private call =====
+// ---- ai: private, like RSVPs. The token goes on automatically.
+export function askAi(prompt: string): Promise<AiReview> {
+  return request<AiReview>("/api/ai", {
+    method: "POST",
+    body: JSON.stringify({ prompt }),
+  });
 }

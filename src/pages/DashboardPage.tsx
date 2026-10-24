@@ -52,7 +52,7 @@ function DashboardPage() {
           <div className="animate-pulse rounded-xl border border-border bg-muted p-6 h-28" />
         ) : isError ? (
           <div className="rounded-xl border border-destructive/20 bg-destructive/5 p-4 text-sm text-destructive">
-            Error loading events — is json-server running?
+            Error loading events — could not connect to API server.
           </div>
         ) : (
           events?.map((event) => (
