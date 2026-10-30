@@ -1,5 +1,8 @@
 # ITELECT4
 
+[![CI](https://github.com/rivioops/itelect4-project/actions/workflows/ci.yml/badge.svg)](https://github.com/rivioops/itelect4-project/actions/workflows/ci.yml)
+
+
 ## Module 1: TypeScript Fundamentals
 
 ```text
@@ -137,4 +140,36 @@ Security:   the browser never calls Gemini and holds no API key; only the
             backend has GEMINI_API_KEY
 
 Branch:     gt5-ai   |   Tag after merge: gt5
+```
+## Architecture
+
+```mermaid
+flowchart LR
+  fe["itelect4-project<br/>React + Vite on Vercel"]
+  be["itelect4-backend<br/>Express on Vercel"]
+  db[("MongoDB Atlas")]
+  ai["Gemini API"]
+  fe -- "fetch + Bearer token" --> be
+  be -- "Mongoose" --> db
+  be -- "GEMINI_API_KEY" --> ai
+```
+
+## GT6: Testing and CI/CD
+
+```text
+Module:     Module 6 - Guided Task 6 (frontend half)
+Framework:  Vitest 5 + Testing Library (@testing-library/react, @testing-library/user-event, @testing-library/jest-dom) + jsdom
+Tests:      1. Component test: src/components/RSVPBadge.test.tsx
+               - Tests rendering of typed ApiRSVP, status badges (confirmed vs pending), and optional children
+            2. Hook test: src/hooks/useToggle.test.ts
+               - Tests initial state and act() state toggles with renderHook
+            3. Form test: src/pages/AiReview.test.tsx
+               - Tests form validation, asserts schema error message, and uses vi.spyOn(globalThis, "fetch")
+                 to prove no network request leaves the browser when input is invalid
+CI/CD:      .github/workflows/ci.yml runs on every push:
+            - Actions: actions/checkout@v7, actions/setup-node@v7 (Node 24, npm cache)
+            - Pipeline: npm ci -> npm run lint -> npm test -> npm run build
+Commands:   npm test              run all tests via Vitest
+            npm run test:watch    run Vitest in interactive watch mode
+Branch:     gt6-tests  |  Tag after merge: gt6
 ```
